@@ -8,6 +8,11 @@
 import SwiftUI
 import SwiftData
 
+//enum NoteNavigation {
+//
+//}
+
+
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var notes: [Note]
@@ -15,6 +20,12 @@ struct ContentView: View {
     @State var addNoteSheetIsPresented: Bool = false
     @State var title: String = ""
     @State var description: String = ""
+    
+    @State var path = []
+    
+    @State private var selected: String = "NONE"
+    let filters = ["Work", "Personal", "Ideas", "Tasks"]
+
 
     var body: some View {
         NavigationStack {
@@ -24,11 +35,37 @@ struct ContentView: View {
                          ContentUnavailableView("No data found. Please add your first note.",
                                                 systemImage: "square.and.pencil")
                     } else {
+                        ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 12) {
+                                        ForEach(filters, id: \.self) { filter in
+                                            Text(filter)
+                                                .fontWeight(.medium)
+                                                .foregroundColor(selected == filter ? .white : Color.blue)
+                                                .padding(.horizontal, 20)
+                                                .padding(.vertical, 10)
+                                                .background(
+                                                    RoundedRectangle(cornerRadius: 25)
+                                                        .fill(selected == filter ? Color.blue : Color(#colorLiteral(red: 0.15, green: 0.18, blue: 0.26, alpha: 1)))
+                                                )
+                                                .onTapGesture {
+                                                    if selected == filter {
+                                                        selected = "NONE"
+                                                    } else {
+                                                        selected = filter
+                                                    }
+                                                }
+                                        }
+                                    }
+                                    .padding(.horizontal)
+                                }
+                        .padding(.vertical)
+                        
                         List {
                             ForEach(notes) { item in
                                 CardView(title: item.title,
                                          description: item.noteDescription,
-                                         date: item.date.description)
+                                         date: item.date.description,
+                                         tag: item.tag)
                             }
                             .onDelete { indexes in
                                 for index in indexes {
@@ -54,6 +91,7 @@ struct ContentView: View {
                 // onDismiss
                 self.title = ""
                 self.description = ""
+                self.selected = "NONE"
             } content: {
                 HStack {
                     Button("Cancel") {
@@ -61,29 +99,67 @@ struct ContentView: View {
                     }
                     .padding()
                     Spacer()
+                    
+                    Button("Submit") {
+                        addItem()
+                        addNoteSheetIsPresented = false
+                        
+                        
+                    }
+                    .padding()
+                    .disabled(submitButtonIsDisabled)
                 }
+                .padding()
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 12) {
+                                ForEach(filters, id: \.self) { filter in
+                                    Text(filter)
+                                        .fontWeight(.medium)
+                                        .foregroundColor(selected == filter ? .white : Color.blue)
+                                        .padding(.horizontal, 20)
+                                        .padding(.vertical, 10)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 25)
+                                                .fill(selected == filter ? Color.blue : Color(#colorLiteral(red: 0.15, green: 0.18, blue: 0.26, alpha: 1)))
+                                        )
+                                        .onTapGesture {
+                                            if selected == filter {
+                                                selected = "NONE"
+                                            } else {
+                                                selected = filter
+                                            }
+                                        }
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
+                
                 
                 VStack {
                     TextField("Enter title", text: $title)
                         .textFieldStyle(.roundedBorder)
                         .padding()
                     
+                    
                     TextEditor(text: $description)
-                        .frame(height: 150)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.gray, lineWidth: 1)
-                        }
+                        .padding([.horizontal])
+                        .autocorrectionDisabled()
+                        .background(Color(.systemBackground)) // optional for matching system theme
+                      //  .edgesIgnoringSafeArea(.bottom) // expands to bottom of screen
+                    
+//                    TextEditor(text: $description)
+//                        .frame(height: 150)
+//                        .overlay {
+//                            RoundedRectangle(cornerRadius: 8)
+//                                .stroke(Color.gray, lineWidth: 1)
+//                        }
                     
                     
                     
                     Spacer()
                     
-                    Button("Submit") {
-                        addItem()
-                        addNoteSheetIsPresented = false
-                    }
-                    .padding()
+                    
                 }
                 .interactiveDismissDisabled()
                 .padding()
@@ -91,6 +167,12 @@ struct ContentView: View {
             }
         }
     }
+    
+    var submitButtonIsDisabled: Bool {
+        (title.isEmpty || description.isEmpty)
+    }
+    
+    
     
     func showSheet() {
         addNoteSheetIsPresented = true
@@ -102,7 +184,8 @@ struct ContentView: View {
     
     func addItem() {
         let item = Note(title: title,
-                        description: description)
+                        description: description,
+                        tag: selected)
         
         modelContext.insert(item)
     }
@@ -120,21 +203,25 @@ struct CardView: View {
     let title: String
     let description: String
     let date: String
-    
+    let tag: String
     
     var body: some View {
         VStack {
             HStack {
                 VStack(alignment: .leading) {
-                    Text("Tag")
-                        .font(.body)
-                        .foregroundColor(Color.blue)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 6)
-                        .background(
-                            Capsule()
-                                .fill(Color(red: 32/255, green: 40/255, blue: 55/255))
-                        )
+                    
+                    if tag != "NONE" {
+                        Text(tag)
+                            .font(.body)
+                            .foregroundColor(Color.blue)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .background(
+                                Capsule()
+                                    .fill(Color(red: 32/255, green: 40/255, blue: 55/255))
+                            )
+                    }
+                   
                     Text(title)
                         .font(.title)
                         .padding(.bottom, 8.0)
@@ -168,30 +255,16 @@ class Note: Identifiable {
     var title: String
     var noteDescription: String
     var date: Date
+    var tag: String
     
-    init(title: String, description: String) {
+    init(title: String, description: String, tag: String) {
         self.id = UUID().uuidString
         self.title = title
         self.noteDescription = description
         self.date = Date()
+        self.tag = tag
     }
 }
-
-//private func addItem() {
-//    withAnimation {
-//        let newItem = Item(timestamp: Date())
-//        modelContext.insert(newItem)
-//    }
-//}
-//
-//private func deleteItems(offsets: IndexSet) {
-//    withAnimation {
-//        for index in offsets {
-//            modelContext.delete(items[index])
-//        }
-//    }
-//}
-
 
 struct FloatingActionButton: View {
     var action: () -> Void
