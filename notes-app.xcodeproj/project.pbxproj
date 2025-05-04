@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C9D89B432DC7174D00A8B996 /* NotesComponents in Frameworks */ = {isa = PBXBuildFile; productRef = C9D89B422DC7174D00A8B996 /* NotesComponents */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		C9C5E9532DB737E8000ECA51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		C9C5E9422DB737E7000ECA51 /* notes-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "notes-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9C5E9522DB737E8000ECA51 /* notes-appTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "notes-appTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9C5E95C2DB737E8000ECA51 /* notes-appUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "notes-appUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9D89B3E2DC7152800A8B996 /* NotesComponents */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NotesComponents; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -52,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9D89B432DC7174D00A8B996 /* NotesComponents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +85,8 @@
 				C9C5E9552DB737E8000ECA51 /* notes-appTests */,
 				C9C5E95F2DB737E8000ECA51 /* notes-appUITests */,
 				C9C5E9432DB737E7000ECA51 /* Products */,
+				C9D89B3E2DC7152800A8B996 /* NotesComponents */,
+				C9D89B412DC7174D00A8B996 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -90,6 +98,13 @@
 				C9C5E95C2DB737E8000ECA51 /* notes-appUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		C9D89B412DC7174D00A8B996 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,6 +127,7 @@
 			);
 			name = "notes-app";
 			packageProductDependencies = (
+				C9D89B422DC7174D00A8B996 /* NotesComponents */,
 			);
 			productName = "notes-app";
 			productReference = C9C5E9422DB737E7000ECA51 /* notes-app.app */;
@@ -591,6 +607,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C9D89B422DC7174D00A8B996 /* NotesComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NotesComponents;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C9C5E93A2DB737E7000ECA51 /* Project object */;
 }

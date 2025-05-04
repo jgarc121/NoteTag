@@ -12,7 +12,7 @@ import SwiftData
 struct notes_appApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NotesMainView()
         }
         .modelContainer(for: Note.self)
     }
