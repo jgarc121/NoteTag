@@ -19,7 +19,7 @@ struct NotesCreateView: View {
         VStack {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
-                    ForEach(filters.filter { $0 != .none && $0 != .all }, id: \.self) { filter in
+                    ForEach(selectableTags, id: \.self) { filter in
                         NotesPill(title: filter.rawValue,
                                   isSelected:
                                     Binding(
@@ -31,6 +31,8 @@ struct NotesCreateView: View {
                         )
                         .onTapGesture {
                             selectedInAddNote = filter
+                            let impact = UIImpactFeedbackGenerator(style: .light)
+                            impact.impactOccurred()
                         }
                     }
                 }
@@ -41,16 +43,16 @@ struct NotesCreateView: View {
             VStack {
                 TextField("Enter title", text: $title)
                     .textFieldStyle(.roundedBorder)
-                    .padding()
-                
+                    .padding(.bottom)
                 
                 TextEditor(text: $description)
                     .padding([.horizontal])
                     .autocorrectionDisabled()
                     .background(Color(.systemBackground))
+                    
                 
                 
-                
+            
                 Spacer()
                 
                 
@@ -69,6 +71,12 @@ struct NotesCreateView: View {
                 .disabled(submitButtonIsDisabled)
             }
         }
+        .padding(.top, 10)
+        .background(Color(red: 15/255, green: 17/255, blue: 21/255))
+    }
+    
+    var selectableTags: [NoteTag] {
+        NoteTag.allCases.filter { $0 != .none && $0 != .all }
     }
     
     
@@ -88,5 +96,5 @@ struct NotesCreateView: View {
 }
 
 #Preview {
-    NotesDetailsView()
+    NotesCreateView()
 }

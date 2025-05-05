@@ -10,6 +10,7 @@ import NotesComponents
 import SwiftData
 
 enum NoteNavigation: Hashable {
+    case addNote
     case noteDetails
 }
 
@@ -26,16 +27,9 @@ struct NotesMainView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var notes: [Note]
     @State var searchText: String = ""
-    @State var addNoteSheetIsPresented: Bool = false
-    @State var title: String = ""
-    @State var description: String = ""
-    
     @State var path: [NoteNavigation] = .init()
-    
     @State private var selected: NoteTag = .all
     let filters = NoteTag.allCases
-    
-    
     @State private var selectedInAddNote: NoteTag = .none
 
 
@@ -47,79 +41,44 @@ struct NotesMainView: View {
                         ContentUnavailableView("No data found. Please add your first note.",
                                                 systemImage: "square.and.pencil")
                     } else {
-                        notesListView()
-                        
+                        notesContentView()
                     }
                 }
-                NotesFloatingActionButton(action: showSheet)
+                NotesFloatingActionButton(action: navigateToAddNewNote)
             }
             .navigationTitle("Notes")
             .background(Color(red: 15/255, green: 17/255, blue: 21/255))
             .navigationBarTitleDisplayMode(.inline)
             .navigationViewStyle(.stack)
-            .sheet(isPresented: $addNoteSheetIsPresented) {
-                // refresh data
-                self.title = ""
-                self.description = ""
-                self.selectedInAddNote = .none // TODO: this needs to be refactored
-            } content: {
-                addNotesView()
-            }
-        }
-        .navigationDestination(for: NoteNavigation.self) { nav in
-            switch nav {
-            case .noteDetails:
-                NotesDetailsView()
+            .navigationDestination(for: NoteNavigation.self) { nav in
+                switch nav {
+                case .noteDetails:
+                    EmptyView()
+                case .addNote:
+                    NotesCreateView()
+                }
             }
         }
     }
     
+    @ViewBuilder
+    func notesContentView() -> some View {
+        tagSelectionView()
+        notesListView()
+    }
     
     @ViewBuilder
     func notesListView() -> some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 12) {
-                        ForEach(filters, id: \.self) { filter in
-                            if filter != .none {
-                                NotesPill(title: filter.rawValue,
-                                          isSelected:
-                                          Binding(
-                                                get: { selected == filter },
-                                                set: { isSelected in
-                                                    if isSelected { selected = filter }
-                                                }
-                                            )
-                                        )
-                                .onTapGesture {
-                                    selected = filter
-                                }
-                            }
-                        }
-                    }
-                    .padding(.horizontal)
-                }
-        .padding(.vertical)
-        
         List {
-            
-            if selected == .all {
-                ForEach(notes) { item in
-                    NotesCardView(title: item.title,
-                                  description: item.noteDescription,
-                                  date: item.date.description,
-                                  tag: item.tag.rawValue)
-                    .onTapGesture {
-                        path.append(.noteDetails)
-                    }
-                }
-                .onDelete { indexes in
-                    for index in indexes {
-                        deleteItems(notes[index])
-                    }
-                    
-                }
+            let filteredNotes = notes.filter { selected == .all || $0.tag == selected }
+            if filteredNotes.isEmpty {
+                ContentUnavailableView("No data found. Please update tag.",
+                                        systemImage: "line.3.horizontal.decrease.circle")
+                .background(Color(red: 15/255, green: 17/255, blue: 21/255))
+                .listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets())
             } else {
-                ForEach(notes.filter { $0.tag == selected }) { item in
+                ForEach(filteredNotes) { item in
                     NotesCardView(title: item.title,
                                   description: item.noteDescription,
                                   date: item.date.description,
@@ -132,11 +91,8 @@ struct NotesMainView: View {
                     for index in indexes {
                         deleteItems(notes[index])
                     }
-                    
                 }
             }
-            
-            
         }
         .searchable(text: $searchText, prompt: "Search notes")
         .listStyle(.plain)
@@ -146,95 +102,41 @@ struct NotesMainView: View {
     
     
     @ViewBuilder
-    func addNotesView() -> some View {
-        HStack {
-            Button("Cancel") {
-                addNoteSheetIsPresented = false
-            }
-            .padding()
-            Spacer()
-            
-            Button("Submit") {
-                addItem()
-                addNoteSheetIsPresented = false
-                
-                
-            }
-            .padding()
-            .disabled(submitButtonIsDisabled)
-        }
-        .padding()
-        
+    func tagSelectionView() -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 12) {
-                        ForEach(filters.filter { $0 != .none && $0 != .all }, id: \.self) { filter in
-                            NotesPill(title: filter.rawValue,
-                                      isSelected:
-                                      Binding(
-                                            get: { selectedInAddNote == filter },
-                                            set: { isSelected in
-                                                if isSelected { selectedInAddNote = filter }
-                                            }
+            HStack(spacing: 12) {
+                ForEach(filters, id: \.self) { filter in
+                    // TODO: Refactor this
+                    if filter != .none {
+                        NotesPill(title: filter.rawValue,
+                                  isSelected:
+                                          Binding(
+                                                get: { selected == filter },
+                                                set: { isSelected in
+                                                    if isSelected { selected = filter }
+                                                }
+                                            )
                                         )
-                                    )
-                            .onTapGesture {
-                                selectedInAddNote = filter
+                                .onTapGesture {
+                                    selected = filter
+                                    let impact = UIImpactFeedbackGenerator(style: .light)
+                                    impact.impactOccurred()
+                                }
                             }
                         }
                     }
                     .padding(.horizontal)
                 }
-        
-        
-        VStack {
-            TextField("Enter title", text: $title)
-                .textFieldStyle(.roundedBorder)
-                .padding()
-            
-            
-            TextEditor(text: $description)
-                .padding([.horizontal])
-                .autocorrectionDisabled()
-                .background(Color(.systemBackground))
-            
-            
-            
-            Spacer()
-            
-            
-        }
-        .interactiveDismissDisabled()
-        .padding()
-        .background(Color(red: 15/255, green: 17/255, blue: 21/255))
-//                .navigationDestination(for: NoteNavigation.self) { _ in
-//                    EmptyView()
-//                }
+        .padding(.vertical)
     }
     
-    var submitButtonIsDisabled: Bool {
-        (title.isEmpty || description.isEmpty)
-    }
-    
-    
-    
-    func showSheet() {
-        addNoteSheetIsPresented = true
+    func navigateToAddNewNote() {
+        path.append(.addNote)
     }
     
     func deleteItems(_ item: Note) {
         modelContext.delete(item)
     }
-    
-    func addItem() {
-        let item = Note(title: title,
-                        description: description,
-                        tag: selectedInAddNote)
-        
-
-        modelContext.insert(item)
-    }
-    
-    
 }
 
 #Preview {
