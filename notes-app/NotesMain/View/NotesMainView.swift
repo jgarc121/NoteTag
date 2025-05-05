@@ -66,6 +66,12 @@ struct NotesMainView: View {
                 addNotesView()
             }
         }
+        .navigationDestination(for: NoteNavigation.self) { nav in
+            switch nav {
+            case .noteDetails:
+                NotesDetailsView()
+            }
+        }
     }
     
     
