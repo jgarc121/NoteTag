@@ -26,13 +26,9 @@ enum NoteTag: String, CaseIterable, Codable {
 struct NotesMainView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var notes: [Note]
-    @State var searchText: String = ""
     @State var path: [NoteNavigation] = .init()
-    @State private var selected: NoteTag = .all
-    let filters = NoteTag.allCases
-    @State private var selectedInAddNote: NoteTag = .none
-
-
+    
+    @State var viewModel =  NotesMainViewModel()
     var body: some View {
         NavigationStack(path: $path) {
             ZStack {
@@ -70,7 +66,7 @@ struct NotesMainView: View {
     @ViewBuilder
     func notesListView() -> some View {
         List {
-            let filteredNotes = notes.filter { selected == .all || $0.tag == selected }
+            let filteredNotes = notes.filter { viewModel.selected == .all || $0.tag == viewModel.selected }
             if filteredNotes.isEmpty {
                 ContentUnavailableView("No data found. Please update tag.",
                                         systemImage: "line.3.horizontal.decrease.circle")
@@ -94,7 +90,7 @@ struct NotesMainView: View {
                 }
             }
         }
-        .searchable(text: $searchText, prompt: "Search notes")
+        .searchable(text: $viewModel.searchText, prompt: "Search notes")
         .listStyle(.plain)
         .listRowSpacing(12)
         .scrollIndicators(.hidden)
@@ -105,28 +101,23 @@ struct NotesMainView: View {
     func tagSelectionView() -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
-                ForEach(filters, id: \.self) { filter in
+                ForEach(viewModel.filters, id: \.self) { filter in
                     // TODO: Refactor this
                     if filter != .none {
                         NotesPill(title: filter.rawValue,
                                   isSelected:
                                           Binding(
-                                                get: { selected == filter },
+                                            get: { viewModel.selected == filter },
                                                 set: { isSelected in
-                                                    if isSelected { selected = filter }
+                                                    if isSelected { viewModel.selected = filter }
                                                 }
                                             )
-                                        )
-                                .onTapGesture {
-                                    selected = filter
-                                    let impact = UIImpactFeedbackGenerator(style: .light)
-                                    impact.impactOccurred()
-                                }
-                            }
-                        }
+                        )
                     }
-                    .padding(.horizontal)
                 }
+            }
+            .padding(.horizontal)
+        }
         .padding(.vertical)
     }
     

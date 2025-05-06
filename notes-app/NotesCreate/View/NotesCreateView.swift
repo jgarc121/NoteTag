@@ -11,34 +11,13 @@ import SwiftUI
 struct NotesCreateView: View {
     @Environment(\.modelContext) private var modelContext
     let filters = NoteTag.allCases
-    @State private var selectedInAddNote: NoteTag = .none
+    @State private var selected: NoteTag = .none
     @State var title: String = ""
     @State var description: String = ""
     
     var body: some View {
         VStack {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 12) {
-                    ForEach(selectableTags, id: \.self) { filter in
-                        NotesPill(title: filter.rawValue,
-                                  isSelected:
-                                    Binding(
-                                        get: { selectedInAddNote == filter },
-                                        set: { isSelected in
-                                            if isSelected { selectedInAddNote = filter }
-                                        }
-                                    )
-                        )
-                        .onTapGesture {
-                            selectedInAddNote = filter
-                            let impact = UIImpactFeedbackGenerator(style: .light)
-                            impact.impactOccurred()
-                        }
-                    }
-                }
-                .padding(.horizontal)
-            }
-            
+            tagPicker()
             
             VStack {
                 TextField("Enter title", text: $title)
@@ -75,6 +54,33 @@ struct NotesCreateView: View {
         .background(Color(red: 15/255, green: 17/255, blue: 21/255))
     }
     
+    
+    
+    @ViewBuilder
+    func tagPicker() -> some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 12) {
+                ForEach(selectableTags, id: \.self) { filter in
+                    NotesPill(title: filter.rawValue,
+                              isSelected:
+                                Binding(
+                                    get: { selected == filter },
+                                    set: { isSelected in
+                                        if isSelected {
+                                            selected = filter
+                                        } else {
+                                            selected = .none
+                                        }
+                                    }
+                                ),
+                              canDeselect: true
+                    )
+                }
+            }
+            .padding(.horizontal)
+        }
+    }
+    
     var selectableTags: [NoteTag] {
         NoteTag.allCases.filter { $0 != .none && $0 != .all }
     }
@@ -87,7 +93,7 @@ struct NotesCreateView: View {
     func addItem() {
         let item = Note(title: title,
                         description: description,
-                        tag: selectedInAddNote)
+                        tag: selected)
         
 
         modelContext.insert(item)

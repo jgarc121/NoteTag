@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+@Observable
+final class NotesMainViewModel {
+    @ObservationIgnored  let filters = NoteTag.allCases
+    
+    var searchText: String = ""
+    var selected: NoteTag = .all
+    
+}
