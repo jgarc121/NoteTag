@@ -24,11 +24,14 @@ enum NoteTag: String, CaseIterable, Codable {
 }
 
 struct NotesMainView: View {
+    let filters = NoteTag.allCases
+    
+    @State var searchText: String = ""
+    @State var selected: NoteTag = .all
     @Environment(\.modelContext) private var modelContext
     @Query private var notes: [Note]
     @State var path: [NoteNavigation] = .init()
     
-    @State var viewModel =  NotesMainViewModel()
     var body: some View {
         NavigationStack(path: $path) {
             ZStack {
@@ -66,7 +69,7 @@ struct NotesMainView: View {
     @ViewBuilder
     func notesListView() -> some View {
         List {
-            let filteredNotes = notes.filter { viewModel.selected == .all || $0.tag == viewModel.selected }
+            let filteredNotes = notes.filter { selected == .all || $0.tag == selected }
             if filteredNotes.isEmpty {
                 ContentUnavailableView("No data found. Please update tag.",
                                         systemImage: "line.3.horizontal.decrease.circle")
@@ -90,7 +93,7 @@ struct NotesMainView: View {
                 }
             }
         }
-        .searchable(text: $viewModel.searchText, prompt: "Search notes")
+        .searchable(text: $searchText, prompt: "Search notes")
         .listStyle(.plain)
         .listRowSpacing(12)
         .scrollIndicators(.hidden)
@@ -101,15 +104,15 @@ struct NotesMainView: View {
     func tagSelectionView() -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
-                ForEach(viewModel.filters, id: \.self) { filter in
+                ForEach(filters, id: \.self) { filter in
                     // TODO: Refactor this
                     if filter != .none {
                         NotesPill(title: filter.rawValue,
                                   isSelected:
                                           Binding(
-                                            get: { viewModel.selected == filter },
+                                            get: { selected == filter },
                                                 set: { isSelected in
-                                                    if isSelected { viewModel.selected = filter }
+                                                    if isSelected { selected = filter }
                                                 }
                                             )
                         )
