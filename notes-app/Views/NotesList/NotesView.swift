@@ -23,7 +23,7 @@ enum NoteTag: String, CaseIterable, Codable {
     case tasks = "Tasks"
 }
 
-struct NotesMainView: View {
+struct NotesView: View {
     let filters = NoteTag.allCases
     
     @State var searchText: String = ""
@@ -134,6 +134,6 @@ struct NotesMainView: View {
 }
 
 #Preview {
-    NotesMainView()
+    NotesView()
         .modelContainer(for: Note.self)
 }
