@@ -1,0 +1,15 @@
+{
+  "originHash" : "47c03286380715a7b76643c6f7dfd471e01c6a20eb8fd5bb7358e744b5bdc76b",
+  "pins" : [
+    {
+      "identity" : "routing",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/JamesSedlacek/Routing.git",
+      "state" : {
+        "revision" : "9434018f47d71dde59664cd311a7086ea9a499e8",
+        "version" : "1.1.0"
+      }
+    }
+  ],
+  "version" : 3
+}

@@ -9,20 +9,6 @@ import SwiftUI
 import NotesComponents
 import SwiftData
 
-enum NoteNavigation: Hashable {
-    case addNote
-    case noteDetails
-}
-
-enum NoteTag: String, CaseIterable, Codable {
-    case all = "All"
-    case none = "None"
-    case work = "Work"
-    case personal = "Personal"
-    case ideas = "Ideas"
-    case tasks = "Tasks"
-}
-
 struct NotesView: View {
     let filters = NoteTag.allCases
     
@@ -30,7 +16,7 @@ struct NotesView: View {
     @State var selected: NoteTag = .all
     @Environment(\.modelContext) private var modelContext
     @Query private var notes: [Note]
-    @State var path: [NoteNavigation] = .init()
+    @State var path: [NoteRoute] = .init()
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -49,14 +35,7 @@ struct NotesView: View {
             .background(Color(red: 15/255, green: 17/255, blue: 21/255))
             .navigationBarTitleDisplayMode(.inline)
             .navigationViewStyle(.stack)
-            .navigationDestination(for: NoteNavigation.self) { nav in
-                switch nav {
-                case .noteDetails:
-                    EmptyView()
-                case .addNote:
-                    NotesCreateView()
-                }
-            }
+            .navigationDestination(for: NoteRoute.self)
         }
     }
     
@@ -83,7 +62,7 @@ struct NotesView: View {
                                   date: item.date.description,
                                   tag: item.tag.rawValue)
                     .onTapGesture {
-                        path.append(.noteDetails)
+                        path.append(.details)
                     }
                 }
                 .onDelete { indexes in
@@ -125,7 +104,7 @@ struct NotesView: View {
     }
     
     func navigateToAddNewNote() {
-        path.append(.addNote)
+        path.append(.add)
     }
     
     func deleteItems(_ item: Note) {

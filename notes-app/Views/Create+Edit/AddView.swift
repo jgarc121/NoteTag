@@ -1,5 +1,5 @@
 //
-//  CreateView.swift
+//  AddView.swift
 //  notes-app
 //
 //  Created by Jose Garcia on 5/4/25.
@@ -8,7 +8,7 @@
 import NotesComponents
 import SwiftUI
 
-struct CreateView: View {
+struct AddView: View {
     @Environment(\.modelContext) private var modelContext
     let filters = NoteTag.allCases
     @State private var selected: NoteTag = .none
@@ -102,5 +102,5 @@ struct CreateView: View {
 }
 
 #Preview {
-    CreateView()
+    AddView()
 }
