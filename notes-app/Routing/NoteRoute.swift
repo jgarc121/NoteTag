@@ -5,10 +5,9 @@
 //  Created by Jose Garcia on 5/17/25.
 //
 
-import Routing
 import SwiftUI
 
-enum NoteRoute: Routable {
+enum NoteRoute: Routable2 {
     case add
     case edit
     case details
@@ -24,3 +23,5 @@ enum NoteRoute: Routable {
         }
     }
 }
+
+public typealias Routable2 = View & Hashable & Codable
