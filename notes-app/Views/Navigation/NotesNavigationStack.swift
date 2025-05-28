@@ -24,7 +24,7 @@ struct NotesNavigationStack: View {
                     case .details:
                         EmptyView() // TODO: Add details view
                     case .edit:
-                        EmptyView() // TODO: Add edit view
+                        EditView()
                     }
                 }
         }
