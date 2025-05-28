@@ -11,12 +11,23 @@ import Routing
 
 struct NotesListView: View {
     @Environment(NotesNavigationStore.self) var router
+    @Environment(\.modelContext) private var modelContext
     let notes: [Note]
     let selected: NoteTag
     @Binding var searchText: String
+    
+    var filteredNotes: [Note] {
+        notes.filter { note in
+            let searchMatch = searchText.isEmpty ||
+                note.title.localizedCaseInsensitiveContains(searchText) ||
+                note.noteDescription.localizedCaseInsensitiveContains(searchText)
+            let tagMatch = selected == .all || note.tag == selected
+            return searchMatch && tagMatch
+        }
+    }
+    
     var body: some View {
         List {
-            let filteredNotes = notes.filter { selected == .all || $0.tag == selected }
             if filteredNotes.isEmpty {
                 ContentUnavailableView("No data found. Please update tag.",
                                         systemImage: "line.3.horizontal.decrease.circle")
@@ -35,12 +46,11 @@ struct NotesListView: View {
                 }
                 .onDelete { indexes in
                     for index in indexes {
-                      // deleteItems(notes[index])
+                        NoteManager.shared.deleteNote(filteredNotes[index], from: modelContext)
                     }
                 }
             }
         }
-        .searchable(text: $searchText, prompt: "Search notes")
         .listStyle(.plain)
         .listRowSpacing(12)
         .scrollIndicators(.hidden)

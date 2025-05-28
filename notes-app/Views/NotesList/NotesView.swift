@@ -17,7 +17,9 @@ struct NotesView: View {
     @State var searchText: String = ""
     @State var selected: NoteTag = .all
     @Environment(\.modelContext) private var modelContext
-    @Query private var notes: [Note]
+    @Query(sort: [
+        SortDescriptor(\Note.date, order: .reverse)
+    ]) private var notes: [Note]
     @State var notesNavigationStore: NotesNavigationStore = .init()
     
     var body: some View {
@@ -38,6 +40,7 @@ struct NotesView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationViewStyle(.stack)
             .navigationDestination(for: NoteRoute.self)
+            .searchable(text: $searchText)
         }
         .environment(notesNavigationStore)
     }
@@ -61,4 +64,3 @@ struct NotesView: View {
     NotesView()
         .modelContainer(for: Note.self)
 }
-

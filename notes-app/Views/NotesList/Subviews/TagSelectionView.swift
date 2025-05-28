@@ -11,7 +11,6 @@ import NotesComponents
 struct TagSelectionView: View {
     @Binding var selected: NoteTag
     
-    
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {

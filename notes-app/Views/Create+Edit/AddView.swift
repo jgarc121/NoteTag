@@ -10,6 +10,7 @@ import SwiftUI
 
 struct AddView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(NotesNavigationStore.self) private var router
     let filters = NoteTag.allCases
     @State private var selected: NoteTag = .none
     @State var title: String = ""
@@ -23,20 +24,15 @@ struct AddView: View {
                 TextField("Enter title", text: $title)
                     .textFieldStyle(.roundedBorder)
                     .padding(.bottom)
+                    .autocorrectionDisabled()
                 
                 TextEditor(text: $description)
                     .padding([.horizontal])
                     .autocorrectionDisabled()
                     .background(Color(.systemBackground))
                     
-                
-                
-            
                 Spacer()
-                
-                
             }
-            .interactiveDismissDisabled()
             .padding()
             .background(Color(red: 15/255, green: 17/255, blue: 21/255))
         }
@@ -44,7 +40,7 @@ struct AddView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Submit") {
                     addItem()
-                    // TODO: Navigate user back
+                    router.path.removeLast()
                 }
                 .padding()
                 .disabled(submitButtonIsDisabled)
@@ -53,8 +49,6 @@ struct AddView: View {
         .padding(.top, 10)
         .background(Color(red: 15/255, green: 17/255, blue: 21/255))
     }
-    
-    
     
     @ViewBuilder
     func tagPicker() -> some View {
@@ -85,20 +79,16 @@ struct AddView: View {
         NoteTag.allCases.filter { $0 != .none && $0 != .all }
     }
     
-    
     var submitButtonIsDisabled: Bool {
         (title.isEmpty || description.isEmpty)
     }
     
     func addItem() {
-        let item = Note(title: title,
-                        description: description,
-                        tag: selected)
-        
-
-        modelContext.insert(item)
+        let note = Note(title: title,
+                       description: description,
+                       tag: selected)
+        NoteManager.shared.addNote(note, in: modelContext)
     }
-    
 }
 
 #Preview {

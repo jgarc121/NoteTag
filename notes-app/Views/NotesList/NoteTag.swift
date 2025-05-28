@@ -5,7 +5,6 @@
 //  Created by Jose Garcia on 5/17/25.
 //
 
-
 enum NoteTag: String, CaseIterable, Codable {
     case all = "All"
     case none = "None"
