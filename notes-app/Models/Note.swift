@@ -14,7 +14,7 @@ class Note: Identifiable {
     var title: String
     var noteDescription: String
     var date: Date
-    var tag: NoteTag = NoteTag.none
+    @Relationship var tag = NoteTag.none
 
     
     init(title: String, description: String, tag: NoteTag = .none) {

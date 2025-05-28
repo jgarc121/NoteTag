@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C94D84D22DDD4AB100B7CE2E /* Routing in Frameworks */ = {isa = PBXBuildFile; productRef = C94D84D12DDD4AB100B7CE2E /* Routing */; };
 		C9D89B432DC7174D00A8B996 /* NotesComponents in Frameworks */ = {isa = PBXBuildFile; productRef = C9D89B422DC7174D00A8B996 /* NotesComponents */; };
 /* End PBXBuildFile section */
 
@@ -59,7 +58,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9D89B432DC7174D00A8B996 /* NotesComponents in Frameworks */,
-				C94D84D22DDD4AB100B7CE2E /* Routing in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,7 +128,6 @@
 			name = "notes-app";
 			packageProductDependencies = (
 				C9D89B422DC7174D00A8B996 /* NotesComponents */,
-				C94D84D12DDD4AB100B7CE2E /* Routing */,
 			);
 			productName = "notes-app";
 			productReference = C9C5E9422DB737E7000ECA51 /* notes-app.app */;
@@ -215,7 +212,6 @@
 			mainGroup = C9C5E9392DB737E7000ECA51;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				C94D84D02DDD4A6C00B7CE2E /* XCRemoteSwiftPackageReference "Routing" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C9C5E9432DB737E7000ECA51 /* Products */;
@@ -419,6 +415,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = NotesTag;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -457,6 +454,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = NotesTag;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -614,23 +612,7 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		C94D84D02DDD4A6C00B7CE2E /* XCRemoteSwiftPackageReference "Routing" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/JamesSedlacek/Routing.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		C94D84D12DDD4AB100B7CE2E /* Routing */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C94D84D02DDD4A6C00B7CE2E /* XCRemoteSwiftPackageReference "Routing" */;
-			productName = Routing;
-		};
 		C9D89B422DC7174D00A8B996 /* NotesComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NotesComponents;
