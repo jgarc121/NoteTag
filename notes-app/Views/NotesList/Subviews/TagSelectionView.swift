@@ -15,18 +15,15 @@ struct TagSelectionView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
                 ForEach(NoteTag.userSelectableTags) { filter in
-                    // TODO: Refactor this
-                    if filter != .none {
-                        NotesPill(title: filter.rawValue,
-                                  isSelected:
-                                          Binding(
-                                            get: { selected == filter },
-                                                set: { isSelected in
-                                                    if isSelected { selected = filter }
-                                                }
-                                            )
+                    NotesPill(title: filter.rawValue,
+                              isSelected:
+                                Binding(
+                                    get: { selected == filter },
+                                    set: { isSelected in
+                                        if isSelected { selected = filter }
+                                    }
+                                )
                         )
-                    }
                 }
             }
             .padding(.horizontal)
