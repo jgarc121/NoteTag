@@ -56,7 +56,7 @@ struct NotesView: View {
     }
     
     func deleteItems(_ item: Note) {
-        modelContext.delete(item)
+        NoteManager.shared.deleteNote(item, from: modelContext)
     }
 }
 
