@@ -20,16 +20,8 @@ struct AddView: View {
             TagSelectionView(tags: NoteTag.selectableCases, selected: $selected)
             
             VStack {
-                TextField("Enter title", text: $title)
-                    .textFieldStyle(.roundedBorder)
-                    .padding(.bottom)
-                    .autocorrectionDisabled()
-                
-                TextEditor(text: $description)
-                    .padding([.horizontal])
-                    .autocorrectionDisabled()
-                    .background(Color(.systemBackground))
-                    
+                NotesTextField(text: $title)
+                NotesTextField(text: $description)
                 Spacer()
             }
             .padding()

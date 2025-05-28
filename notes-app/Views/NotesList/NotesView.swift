@@ -20,29 +20,22 @@ struct NotesView: View {
     @Query(sort: [
         SortDescriptor(\Note.date, order: .reverse)
     ]) private var notes: [Note]
-    @State var notesNavigationStore: NotesNavigationStore = .init()
+    @Environment(NotesNavigationStore.self) private var router
     
     var body: some View {
-        NavigationStack(path: $notesNavigationStore.path) {
-            ZStack {
-                VStack {
-                    if notes.isEmpty {
-                        ContentUnavailableView("No data found. Please add your first note.",
-                                                systemImage: "square.and.pencil")
-                    } else {
-                        notesContentView()
-                    }
+        ZStack {
+            VStack {
+                if notes.isEmpty {
+                    ContentUnavailableView("No data found. Please add your first note.",
+                                            systemImage: "square.and.pencil")
+                } else {
+                    notesContentView()
                 }
-                NotesFloatingActionButton(action: navigateToAddNewNote)
             }
-            .navigationTitle("Notes")
-            .background(Color(red: 15/255, green: 17/255, blue: 21/255))
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationViewStyle(.stack)
-            .navigationDestination(for: NoteRoute.self)
-            .searchable(text: $searchText)
+            NotesFloatingActionButton(action: navigateToAddNewNote)
         }
-        .environment(notesNavigationStore)
+        .background(Color(red: 15/255, green: 17/255, blue: 21/255))
+        .searchable(text: $searchText)
     }
     
     @ViewBuilder
@@ -52,11 +45,12 @@ struct NotesView: View {
     }
     
     func navigateToAddNewNote() {
-        notesNavigationStore.path.append(.add)
+        router.path.append(.add)
     }
 }
 
 #Preview {
     NotesView()
         .modelContainer(for: Note.self)
+        .environment(NotesNavigationStore())
 }
