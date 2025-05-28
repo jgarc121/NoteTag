@@ -7,10 +7,14 @@
 
 import SwiftUI
 
-struct NotesTextEditor: View {
+public struct NotesTextEditor: View {
     @Binding var text: String
     
-    var body: some View {
+    public init(text: Binding<String>) {
+        self._text = text
+    }
+    
+    public var body: some View {
         TextEditor(text: $text)
             .padding([.horizontal])
             .autocorrectionDisabled()

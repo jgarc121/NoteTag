@@ -7,10 +7,14 @@
 
 import SwiftUI
 
-struct NotesTextField: View {
+public struct NotesTextField: View {
     @Binding var text: String
     
-    var body: some View {
+    public init(text: Binding<String>) {
+        self._text = text
+    }
+    
+    public var body: some View {
         TextField("Enter title", text: $text)
             .textFieldStyle(.roundedBorder)
             .padding(.bottom)
