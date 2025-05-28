@@ -54,7 +54,7 @@ struct AddView: View {
     func tagPicker() -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
-                ForEach(selectableTags, id: \.self) { filter in
+                ForEach(NoteTag.selectableCases, id: \.self) { filter in
                     NotesPill(title: filter.rawValue,
                               isSelected:
                                 Binding(
@@ -74,11 +74,6 @@ struct AddView: View {
             .padding(.horizontal)
         }
     }
-    
-    var selectableTags: [NoteTag] {
-        NoteTag.allCases.filter { $0 != .none && $0 != .all }
-    }
-    
     var submitButtonIsDisabled: Bool {
         (title.isEmpty || description.isEmpty)
     }

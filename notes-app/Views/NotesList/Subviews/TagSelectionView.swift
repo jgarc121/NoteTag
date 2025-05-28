@@ -14,7 +14,7 @@ struct TagSelectionView: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
-                ForEach(NoteTag.allCases.filter { $0 != .none }, id: \.self) { filter in
+                ForEach(NoteTag.userSelectableTags) { filter in
                     // TODO: Refactor this
                     if filter != .none {
                         NotesPill(title: filter.rawValue,
