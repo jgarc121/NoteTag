@@ -39,7 +39,7 @@ struct AddView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Submit") {
                     addItem()
-                    router.path.removeLast()
+                    goBack()
                 }
                 .padding()
                 .disabled(submitButtonIsDisabled)
@@ -47,6 +47,10 @@ struct AddView: View {
         }
         .padding(.top, 10)
         .background(Color(red: 15/255, green: 17/255, blue: 21/255))
+    }
+    
+    func goBack() {
+        router.path.removeLast()
     }
     
     var submitButtonIsDisabled: Bool {

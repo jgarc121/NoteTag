@@ -54,10 +54,6 @@ struct NotesView: View {
     func navigateToAddNewNote() {
         notesNavigationStore.path.append(.add)
     }
-    
-    func deleteItems(_ item: Note) {
-        NoteManager.shared.deleteNote(item, from: modelContext)
-    }
 }
 
 #Preview {

@@ -41,12 +41,12 @@ struct NotesListView: View {
                                   date: item.date.description,
                                   tag: item.tag.rawValue)
                     .onTapGesture {
-                        router.path.append(.details)
+                        goToNote(item)
                     }
                 }
                 .onDelete { indexes in
                     for index in indexes {
-                        NoteManager.shared.deleteNote(filteredNotes[index], from: modelContext)
+                        deleteNote(index: index)
                     }
                 }
             }
@@ -55,6 +55,16 @@ struct NotesListView: View {
         .listRowSpacing(12)
         .scrollIndicators(.hidden)
     }
+    
+    func deleteNote(index: Int) {
+        NoteManager.shared.deleteNote(filteredNotes[index], from: modelContext)
+    }
+    
+    func goToNote(_ note: Note) {
+        // TODO: pass in note to details
+        router.path.append(.details)
+    }
+    
 }
 
 #Preview {
