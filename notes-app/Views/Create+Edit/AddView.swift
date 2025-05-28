@@ -11,14 +11,13 @@ import SwiftUI
 struct AddView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(NotesNavigationStore.self) private var router
-    let filters = NoteTag.allCases
     @State private var selected: NoteTag = .none
     @State var title: String = ""
     @State var description: String = ""
     
     var body: some View {
         VStack {
-            tagPicker()
+            TagSelectionView(tags: NoteTag.selectableCases, selected: $selected)
             
             VStack {
                 TextField("Enter title", text: $title)
@@ -50,30 +49,6 @@ struct AddView: View {
         .background(Color(red: 15/255, green: 17/255, blue: 21/255))
     }
     
-    @ViewBuilder
-    func tagPicker() -> some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 12) {
-                ForEach(NoteTag.selectableCases, id: \.self) { filter in
-                    NotesPill(title: filter.rawValue,
-                              isSelected:
-                                Binding(
-                                    get: { selected == filter },
-                                    set: { isSelected in
-                                        if isSelected {
-                                            selected = filter
-                                        } else {
-                                            selected = .none
-                                        }
-                                    }
-                                ),
-                              canDeselect: true
-                    )
-                }
-            }
-            .padding(.horizontal)
-        }
-    }
     var submitButtonIsDisabled: Bool {
         (title.isEmpty || description.isEmpty)
     }

@@ -9,12 +9,13 @@ import SwiftUI
 import NotesComponents
 
 struct TagSelectionView: View {
+    var tags: [NoteTag]
     @Binding var selected: NoteTag
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
-                ForEach(NoteTag.userSelectableTags) { filter in
+                ForEach(tags) { filter in
                     NotesPill(title: filter.rawValue,
                               isSelected:
                                 Binding(
@@ -33,5 +34,6 @@ struct TagSelectionView: View {
 }
 
 #Preview {
-    TagSelectionView(selected: .constant(NoteTag.ideas))
+    TagSelectionView(tags: NoteTag.userSelectableTags,
+                     selected: .constant(NoteTag.ideas))
 }

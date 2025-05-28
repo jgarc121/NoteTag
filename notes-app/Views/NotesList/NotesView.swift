@@ -47,7 +47,7 @@ struct NotesView: View {
     
     @ViewBuilder
     func notesContentView() -> some View {
-        TagSelectionView(selected: $selected)
+        TagSelectionView(tags: NoteTag.userSelectableTags, selected: $selected)
         NotesListView(notes: notes, selected: selected, searchText: $searchText)
     }
     
