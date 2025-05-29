@@ -1,4 +1,4 @@
-# 📝 Notes App (SwiftUI + SwiftData)
+# 📝 NotesTag (SwiftUI + SwiftData)
 
 A simple note-taking app built using **SwiftUI** and **SwiftData**.  
 This project is currently **in progress** and serves as a learning playground for experimenting with SwiftData's capabilities for local persistence in iOS apps.
