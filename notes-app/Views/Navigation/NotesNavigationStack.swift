@@ -15,16 +15,15 @@ struct NotesNavigationStack: View {
         NavigationStack(path: $notesNavigationStore.path) {
             NotesView()
                 .navigationTitle("Notes")
+                .preferredColorScheme(.dark)
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationViewStyle(.stack)
                 .navigationDestination(for: NoteRoute.self) { route in
                     switch route {
                     case .add:
                         AddView()
-                    case .details:
-                        EmptyView() // TODO: Add details view
-                    case .edit:
-                        EditView()
+                    case .edit(let note):
+                        EditView(note: note)
                     }
                 }
         }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import NotesTheme
 
 public struct NotesFloatingActionButton: View {
     private var action: () -> Void
@@ -24,7 +25,7 @@ public struct NotesFloatingActionButton: View {
                         .font(.system(size: 24))
                         .foregroundColor(.white)
                         .frame(width: 60, height: 60)
-                        .background(Color.blue)
+                        .background(Color.floatingButtonColor)
                         .clipShape(Circle())
                         .shadow(radius: 5)
                 }

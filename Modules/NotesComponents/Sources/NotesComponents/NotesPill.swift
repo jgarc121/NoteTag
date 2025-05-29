@@ -5,8 +5,8 @@
 //  Created by Jose Garcia on 5/3/25.
 //
 
-
 import SwiftUI
+import NotesTheme
 
 public struct NotesPill: View {
     private let title: String
@@ -18,7 +18,7 @@ public struct NotesPill: View {
         self._isSelected = isSelected
         self.canDeselect = canDeselect
     }
-    
+    // TODO: Need to refactor this pill to allow also to be used in the card itself which will not be tapable, just a view
     public var body: some View {
         Button {
             if isSelected && canDeselect {
@@ -33,12 +33,12 @@ public struct NotesPill: View {
         } label: {
             Text(title)
                 .fontWeight(.medium)
-                .foregroundColor(isSelected ? .white : Color.blue)
+                .foregroundColor(isSelected ? Color.tagSelectedText : Color.tagNotSelectedText)
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
                 .background(
                     RoundedRectangle(cornerRadius: 25)
-                        .fill(isSelected ? Color.blue : Color(#colorLiteral(red: 0.15, green: 0.18, blue: 0.26, alpha: 1)))
+                        .fill(isSelected ? Color.tagSelectedBackground : Color.tagNotSelectedBackground)
                 )
         }
     }

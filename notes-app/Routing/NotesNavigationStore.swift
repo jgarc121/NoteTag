@@ -10,4 +10,10 @@ import Observation
 @Observable
 final class NotesNavigationStore {
     var path: [NoteRoute] = .init()
+    
+    func goBack() {
+        if path.count > 0 {
+            path.removeLast()
+        }
+    }
 }

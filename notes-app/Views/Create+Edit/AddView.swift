@@ -7,6 +7,7 @@
 
 import NotesComponents
 import SwiftUI
+import NotesTheme
 
 struct AddView: View {
     @Environment(\.modelContext) private var modelContext
@@ -21,11 +22,11 @@ struct AddView: View {
             
             VStack {
                 NotesTextField(text: $title)
-                NotesTextField(text: $description)
+                NotesTextEditor(text: $description)
                 Spacer()
             }
             .padding()
-            .background(Color(red: 15/255, green: 17/255, blue: 21/255))
+            .background(Color.backgroundColor)
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -38,7 +39,7 @@ struct AddView: View {
             }
         }
         .padding(.top, 10)
-        .background(Color(red: 15/255, green: 17/255, blue: 21/255))
+        .background(Color.backgroundColor)
     }
     
     func goBack() {

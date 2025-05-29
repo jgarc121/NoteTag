@@ -7,6 +7,7 @@
 
 import SwiftUI
 import NotesComponents
+import NotesTheme
 import SwiftData
 import Routing
 import Observation
@@ -34,7 +35,7 @@ struct NotesView: View {
             }
             NotesFloatingActionButton(action: navigateToAddNewNote)
         }
-        .background(Color(red: 15/255, green: 17/255, blue: 21/255))
+        .background(Color.backgroundColor)
         .searchable(text: $searchText)
     }
     

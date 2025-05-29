@@ -7,7 +7,7 @@
 
 import SwiftUI
 import NotesComponents
-import Routing
+import NotesTheme
 
 struct NotesListView: View {
     @Environment(NotesNavigationStore.self) var router
@@ -31,7 +31,7 @@ struct NotesListView: View {
             if filteredNotes.isEmpty {
                 ContentUnavailableView("No data found. Please update tag.",
                                         systemImage: "line.3.horizontal.decrease.circle")
-                .background(Color(red: 15/255, green: 17/255, blue: 21/255))
+                .background(Color.backgroundColor)
                 .listRowSeparator(.hidden)
                 .listRowInsets(EdgeInsets())
             } else {
@@ -61,8 +61,7 @@ struct NotesListView: View {
     }
     
     func goToNote(_ note: Note) {
-        // TODO: pass in note to details
-        router.path.append(.details)
+        router.path.append(.edit(note: note))
     }
     
 }

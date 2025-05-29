@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import NotesTheme
 
 public struct NotesCardView: View {
     let title: String
@@ -25,14 +26,7 @@ public struct NotesCardView: View {
             HStack {
                 VStack(alignment: .leading) {
                     if let tag = tag {
-                        Text(tag)
-                            .font(.body)
-                            .foregroundColor(Color.blue)
-                            .padding(.vertical, 6)
-                            .background(
-                                Capsule()
-                                    .fill(Color(red: 32/255, green: 40/255, blue: 55/255))
-                            )
+                        NotesPill(title: tag, isSelected: .constant(false), canDeselect: false)
                     }
             
                     Text(title)
@@ -44,19 +38,20 @@ public struct NotesCardView: View {
                         .padding(.bottom, 18.0)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .foregroundStyle(Color.cardTextColor)
             }
             .padding(.horizontal, 17.0)
             .padding(.top, 13.0)
             .padding(.bottom, 18.0)
             .background(
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(Color(red: 0.13, green: 0.14, blue: 0.15))
+                    .fill(Color.cardBackgroundColor)
             )
         }
         .listRowSeparator(.hidden)
         .listRowInsets(EdgeInsets())
         .padding(.horizontal, 16.0)
-        .background(Color(red: 15/255, green: 17/255, blue: 21/255))
+        .background(Color.backgroundColor)
     }
 }
 

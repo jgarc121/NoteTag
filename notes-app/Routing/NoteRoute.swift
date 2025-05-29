@@ -7,21 +7,9 @@
 
 import SwiftUI
 
-enum NoteRoute: Routable2 {
+enum NoteRoute: Routable {
     case add
-    case edit
-    case details
-    
-    var body: some View {
-        switch self {
-        case .add:
-            AddView()
-        case .edit:
-            EditView()
-        case .details:
-            EmptyView()
-        }
-    }
+    case edit(note: Note)
 }
 
-public typealias Routable2 = View & Hashable & Codable
+public typealias Routable = Hashable

@@ -4,24 +4,24 @@
 import PackageDescription
 
 let package = Package(
-    name: "NotesComponents",
+    name: "NotesTheme",
     platforms: [
         .iOS(.v17)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "NotesComponents",
-            targets: ["NotesComponents"]),
+            name: "NotesTheme",
+            targets: ["NotesTheme"]),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "NotesComponents"),
+            name: "NotesTheme"),
         .testTarget(
-            name: "NotesComponentsTests",
-            dependencies: ["NotesComponents"]
+            name: "NotesThemeTests",
+            dependencies: ["NotesTheme"]
         ),
     ]
 )
