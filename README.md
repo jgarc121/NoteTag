@@ -15,18 +15,6 @@ NoteTag lets you quickly jot down thoughts, organize them with tags, and persist
 
 ---
 
-## 📸 Screenshots
-<div align="center">
-  
-  <img src="https://github.com/user-attachments/assets/97391dc7-c2df-4f2f-953a-054edc060411" width="250" />
-  <img src="https://github.com/user-attachments/assets/e17c1175-d0e5-449e-bf0d-9b7f33868954" width="250" />
-  <img src="https://github.com/user-attachments/assets/dc514b80-4937-4bab-baf2-9460916e616a" width="250" />
-  <img src="https://github.com/user-attachments/assets/6f2fc161-fa3c-490a-8c9e-8315c02f4dd3" width="250" />
-  <img src="https://github.com/user-attachments/assets/d89c0ab0-0b73-4f31-ba55-4f0f101202ca" width="250" />
-
-</div>
----
-
 ## 🛠️ Technologies Used
 
 - **SwiftUI** – declarative UI and state management
@@ -48,6 +36,18 @@ NoteTag is built with scalability in mind using modular Swift best practices:
 - **Subview Composition**  
   Views are broken down into reusable subviews for improved code clarity and reuse. This keeps each screen focused and maintainable.
 
+
+## 📸 Screenshots
+<div align="center">
+  
+  <img src="https://github.com/user-attachments/assets/97391dc7-c2df-4f2f-953a-054edc060411" width="250" />
+  <img src="https://github.com/user-attachments/assets/e17c1175-d0e5-449e-bf0d-9b7f33868954" width="250" />
+  <img src="https://github.com/user-attachments/assets/dc514b80-4937-4bab-baf2-9460916e616a" width="250" />
+  <img src="https://github.com/user-attachments/assets/6f2fc161-fa3c-490a-8c9e-8315c02f4dd3" width="250" />
+  <img src="https://github.com/user-attachments/assets/d89c0ab0-0b73-4f31-ba55-4f0f101202ca" width="250" />
+
+</div>
+---
 
 ## 🚀 Getting Started
 
