@@ -16,8 +16,13 @@ NoteTag lets you quickly jot down thoughts, organize them with tags, and persist
 ---
 
 ## 📸 Screenshots
-![Simulator Screenshot - iPhone 16 Pro - 2025-06-04 at 19 31 28](https://github.com/user-attachments/assets/97391dc7-c2df-4f2f-953a-054edc060411)![Simulator Screenshot - iPhone 16 Pro - 2025-06-04 at 19 32 34](https://github.com/user-attachments/assets/e17c1175-d0e5-449e-bf0d-9b7f33868954) ![Simulator Screenshot - iPhone 16 Pro - 2025-06-04 at 19 32 34](https://github.com/user-attachments/assets/e17c1175-d0e5-449e-bf0d-9b7f33868954)
+<div align="center">
 
+  <img src="https://github.com/user-attachments/assets/97391dc7-c2df-4f2f-953a-054edc060411" width="250" />
+  <img src="https://github.com/user-attachments/assets/e17c1175-d0e5-449e-bf0d-9b7f33868954" width="250" />
+  <img src="https://github.com/user-attachments/assets/e17c1175-d0e5-449e-bf0d-9b7f33868954" width="250" />
+
+</div>
 ---
 
 ## 🛠️ Technologies Used
