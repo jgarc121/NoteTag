@@ -35,6 +35,16 @@ NoteTag lets you quickly jot down thoughts, organize them with tags, and persist
 
 ---
 
+🧱 Architecture
+
+NoteTag is built with scalability in mind using modular Swift best practices:
+	•	Modularization via Swift Packages
+The app is split into feature-based Swift Packages, making the codebase more organized, testable, and scalable.
+	•	Routing System
+A lightweight internal router helps manage navigation between views cleanly. This improves separation of concerns and makes deep linking or conditional flows easier.
+	•	Subview Composition
+Views are broken down into reusable subviews for improved code clarity and reuse. This keeps each screen focused and maintainable.
+
 ## 🚀 Getting Started
 
 1. Clone the repo:
