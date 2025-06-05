@@ -1,4 +1,4 @@
-# 🗂️ NoteTag (SwiftUI + SwiftData)
+  # 🗂️ NoteTag (SwiftUI + SwiftData)
 
 A beautifully crafted, lightweight note-taking app built entirely in **SwiftUI** and **SwiftData**.  
 NoteTag lets you quickly jot down thoughts, organize them with tags, and persist them locally using native Apple frameworks.
@@ -20,8 +20,8 @@ NoteTag lets you quickly jot down thoughts, organize them with tags, and persist
   
   <img src="https://github.com/user-attachments/assets/97391dc7-c2df-4f2f-953a-054edc060411" width="250" />
   <img src="https://github.com/user-attachments/assets/e17c1175-d0e5-449e-bf0d-9b7f33868954" width="250" />
-  <img src="https://github.com/user-attachments/assets/587194c5-5c97-4c93-8972-ee8ebef06d58" width="250" />
-
+  <img src="https://github.com/user-attachments/assets/dc514b80-4937-4bab-baf2-9460916e616a" width="250" />
+  
 </div>
 ---
 
